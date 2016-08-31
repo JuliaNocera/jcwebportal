@@ -1,0 +1,16 @@
+<div>
+  <nav class='navbar navbar-default navbar-inverse navbar-fiexd-top'>
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#/home">HOME</a>
+      </div>
+    </div>
+  </nav>
+  <h1>{{title}}</h1>
+  <ul ng-repeat="category in categories">
+    <li>{{category.categoryName}}</li>
+      <ul ng-repeat="post in category.posts">
+        <li>{{post}}</li>
+      </ul>
+  </ul>
+</div>
