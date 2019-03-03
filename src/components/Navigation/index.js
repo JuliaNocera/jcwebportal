@@ -14,36 +14,36 @@ const Navigation = () => (
 )
 
 const NavigationAuth = () => (
-  <ul>
-    <li>
+  <div className='navigation--list'>
+    <div>
       <Link to={ROUTES.LANDING}>Landing</Link>
-    </li>
-    <li>
+    </div>
+    <div>
       <Link to={ROUTES.HOME}>Home</Link>
-    </li>
-    <li>
+    </div>
+    <div>
       <Link to={ROUTES.ACCOUNT}>Account</Link>
-    </li>
-    <li>
+    </div>
+    <div>
       <Link to={ROUTES.ADMIN}>Admin</Link>
-    </li>
-    <li>
+    </div>
+    <div>
       <Link to={ROUTES.TEST_DATA}>Test Data</Link>
-    </li>
-    <li>
+    </div>
+    <div>
       <SignOutButton />
-    </li>
-  </ul>
+    </div>
+  </div>
 )
 
 const NavigationNonAuth = () => (
   <ul>
-    <li>
+    <div>
       <Link to={ROUTES.LANDING}>Landing</Link>
-    </li>
-    <li>
+    </div>
+    <div>
       <Link to={ROUTES.SIGN_IN}>Sign In</Link>
-    </li>
+    </div>
   </ul>
 )
 

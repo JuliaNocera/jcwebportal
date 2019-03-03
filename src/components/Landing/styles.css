@@ -1,0 +1,19 @@
+.CategoryList {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.CategoryList * {
+  margin: 5px;
+}
+
+.CategoryButton {
+  cursor: pointer;
+  border: 1px solid gray;
+  padding: 5px;
+}
+
+.selected {
+  background-color: cornflowerblue;
+}

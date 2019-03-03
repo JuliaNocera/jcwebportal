@@ -1,0 +1,7 @@
+.navigation--list {
+  display: flex;
+}
+
+.navigation--list * {
+  margin: 5px;
+}

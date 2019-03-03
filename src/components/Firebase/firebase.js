@@ -38,10 +38,28 @@ class Firebase {
 
   users = () => this.db.ref('users')
 
-  ref = () => this.db.ref()
+  ref = location => this.db.ref(location)
 
   // testData = data => this.db.ref(`testData/${data}`)
   testDataList = () => this.db.ref('testData')
+
+  updateAtLocation = ({ refLocation, onSuccess, onError, input }) => {
+    const newKey = this.db.ref(refLocation).push().key
+
+    var updates = {}
+    updates[`/${refLocation}/` + newKey] = input
+
+    this.db
+      .ref()
+      .update(updates)
+      .then(() => {
+        onSuccess()
+      })
+      .catch(error => {
+        console.log({ error })
+        onError(error)
+      })
+  }
 }
 
 export default Firebase
