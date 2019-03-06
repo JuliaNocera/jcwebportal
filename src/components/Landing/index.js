@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 
+import { AddCategoryForm } from '../Forms'
 import CategoryRenderer from '../CategoryRenderer'
 import { withFirebase } from '../Firebase'
 
@@ -38,6 +39,7 @@ class Landing extends Component {
 
   createNewCategory = e => {
     const { newCategoryInput } = this.state
+    e.preventDefault()
 
     this.props.firebase.updateAtLocation({
       input: newCategoryInput,
@@ -45,8 +47,6 @@ class Landing extends Component {
       onError: this.onUpdateError,
       refLocation: 'categories'
     })
-
-    e.preventDefault()
   }
 
   onChange = e => {
@@ -71,10 +71,10 @@ class Landing extends Component {
           selectedCategory={selectedCategory}
         />
         <div>Or Create a new Category</div>
-        <NewCategoryForm
+        <AddCategoryForm
           onChange={this.onChange}
           newCategoryInput={newCategoryInput}
-          onSubmit={this.createNewCategory}
+          onAddCategory={this.createNewCategory}
         />
 
         <hr />

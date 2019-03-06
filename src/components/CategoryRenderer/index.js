@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
 
+import { AddCategoryForm } from '../Forms'
 import { withFirebase } from '../Firebase'
 
 class CategoryRenderer extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      selectedCategory: null,
       subCategories: [],
-      newEntryInput: ''
+      newCategoryInput: ''
     }
   }
 
@@ -26,25 +28,29 @@ class CategoryRenderer extends Component {
   }
 
   onChange = e => {
-    this.setState({ [e.target.name]: e.target.value })
     e.preventDefault()
+    this.setState({ [e.target.name]: e.target.value })
   }
 
   onAddEntry = e => {
-    const { newEntryInput } = this.state
+    e.preventDefault()
+    const { newCategoryInput } = this.state
     const { category } = this.props
-    console.log({ newEntryInput })
     this.props.firebase.updateAtLocation({
-      input: newEntryInput,
-      onSuccess: () => this.setState({ newEntryInput: '' }),
+      input: newCategoryInput,
+      onSuccess: () => this.setState({ newCategoryInput: '' }),
       onError: error => this.setState({ error }),
       refLocation: category
     })
+  }
+
+  onSelectCategory = (category, e) => {
+    console.log({ category })
     e.preventDefault()
   }
 
   render() {
-    const { subCategories, newEntryInput } = this.state
+    const { subCategories, newCategoryInput, selectedCategory } = this.state
     const { category } = this.props
 
     return (
@@ -52,14 +58,18 @@ class CategoryRenderer extends Component {
         <h1>{category}</h1>
         <div>
           select sub-categories:
-          <div>{subCategories}</div>
+          <CategoryList
+            categories={subCategories}
+            onSelectCategory={this.onSelectCategory}
+            selectedCategory={selectedCategory}
+          />
         </div>
         <div>
           ... or add new category
-          <AddEntry
-            newEntryInput={newEntryInput}
+          <AddCategoryForm
+            newCategoryInput={newCategoryInput}
             onChange={this.onChange}
-            onAddEntry={this.onAddEntry}
+            onAddCategory={this.onAddEntry}
           />
         </div>
       </div>
@@ -67,18 +77,30 @@ class CategoryRenderer extends Component {
   }
 }
 
-const AddEntry = ({ newEntryInput, onChange, onAddEntry }) => {
+const CategoryList = ({ categories, onSelectCategory, selectedCategory }) => {
   return (
-    <form onSubmit={onAddEntry}>
-      <input
-        value={newEntryInput}
-        onChange={onChange}
-        type='text'
-        name={'newEntryInput'}
-        placeholder='entry'
-      />
-      <button type='submit'>Submit</button>
-    </form>
+    <div className='CategoryList'>
+      {categories &&
+        categories.map(category => (
+          <CategoryButton
+            key={category}
+            category={category}
+            onClick={onSelectCategory}
+            isSelected={selectedCategory === category}
+          />
+        ))}
+    </div>
+  )
+}
+
+const CategoryButton = ({ category, onClick, isSelected }) => {
+  return (
+    <div
+      onClick={e => onClick(category, e)}
+      className={isSelected ? 'CategoryButton selected' : 'CategoryButton '}
+    >
+      {category}
+    </div>
   )
 }
 

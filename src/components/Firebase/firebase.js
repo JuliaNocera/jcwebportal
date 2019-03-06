@@ -46,8 +46,10 @@ class Firebase {
   updateAtLocation = ({ refLocation, onSuccess, onError, input }) => {
     const newKey = this.db.ref(refLocation).push().key
 
-    var updates = {}
+    const updates = {}
     updates[`/${refLocation}/` + newKey] = input
+
+    console.log({ newKey, updates })
 
     this.db
       .ref()
